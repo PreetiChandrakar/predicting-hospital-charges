@@ -16,19 +16,25 @@ def run():
     image = Image.open('logo.png')
     image_hospital = Image.open('hospital.jpg')
 
-    st.image(image,use_column_width=False)
-
+    st.image(image,use_column_width=True)
+    
+    html_temp = """
+    <div style="background-color:midnightblue;padding:1.5px">
+    <h1 style="color:white;text-align:center;">Health Bucks </h1>
+    </div><br>"""
+    st.markdown(html_temp,unsafe_allow_html=True)
+    
     add_selectbox = st.sidebar.selectbox(
     "How would you like to predict?",
     ("Online", "Batch"))
 
-    st.sidebar.info('This app predicts patient hospitalization charges based on demographic and health risk metrics.')
+    st.sidebar.info('This Web App is designed to predict patient hospitalization charges based on demographic and health risk metrics using Machine Learning.')
     st.sidebar.success('https://www.pycaret.org')
     
     st.sidebar.image(image_hospital)
 
-    st.title("Hospitalization Charges Prediction App")
-
+    st.header("Hospitalization Charges Prediction Web App")
+    
     if add_selectbox == 'Online':
 
         age = st.number_input('Age', min_value=1, max_value=100, value=25)
@@ -48,7 +54,7 @@ def run():
 
         if st.button("Predict"):
             output = predict(model=model, input_df=input_df)
-            output = '$' + str(output)
+            output = 'Rs. ' + str(output)
 
         st.success('The output is {}'.format(output))
 
